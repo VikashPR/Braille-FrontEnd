@@ -1,0 +1,319 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap");
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --drag-area-text-color: #636c80;
+  --drag-area-separator-color: #93a9c3;
+  --drag-area-primary-color: #4c5ff9;
+  --drag-area-primary-hover: #162ef7;
+  --drag-area-loader-bg: #eff2f5;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
+@media screen and (max-width: 768px) {
+  html,
+  body {
+    font-size: 80%;
+  }
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Raleway", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: calc(100vh - 20px);
+}
+.container {
+  display: grid;
+  place-items: center;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  grid-gap: 2rem;
+  padding: 0 20px;
+  perspective: 1000px;
+}
+@media screen and (max-width: 900px) {
+  .container {
+    margin-top: 90px;
+    grid-template-columns: 1fr;
+  }
+}
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  border: black;
+  border-width: 2px;
+  box-shadow: 0px 3px 20px 3px rgba(0, 0, 0, 0.06);
+}
+.head_container {
+  padding: 20px;
+  overflow: hidden;
+}
+.logo {
+  float: left;
+  margin-left: 20px;
+}
+.logo img {
+  height: 50px;
+}
+.menu {
+  margin-top: 5px;
+  float: right;
+}
+.menu ul {
+  list-style-type: none;
+  margin-right: -10px;
+}
+.menu li {
+  display: inline;
+  margin-right-last: 0px;
+}
+.menu a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #1c3664;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.menu a:hover {
+  background: rgba(247, 202, 24, 0.1);
+  border: #f7ca18;
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 2px;
+  transition: 0.2s;
+}
+.icon {
+  display: none;
+}
+
+menu.responsive {
+  position: relative;
+}
+menu.responsive {
+  float: none;
+  display: block;
+  text-align: left;
+}
+
+@media screen and (max-width: 835px) {
+  .logo img {
+    height: 40px;
+  }
+  ul > li:first-of-type {
+    display: none;
+  }
+  .menu {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 690px) {
+  .menu li {
+    display: none;
+  }
+  .icon {
+    font-weight: 900 !important;
+    font-size: 27px !important;
+    padding: 0;
+    margin: 0;
+    margin-top: -22px;
+    display: flex;
+  }
+  .logo img {
+    height: 40px;
+  }
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: 0.2s;
+  padding-top: 87px;
+  box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.24);
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #1c3664;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover,
+.offcanvas a:focus {
+  color: #f7ca18;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+button {
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.drag-drop-wrapper {
+  transform-style: preserve-3d;
+  position: relative;
+  transition: transform 0.4s;
+}
+.drag-drop-wrapper form {
+  display: none;
+}
+.drag-drop-wrapper.active {
+  transform: scale(1.2);
+}
+.drag-drop-wrapper.active .drag-drop-area {
+  border-color: var(--drag-area-primary-color);
+}
+.drag-drop-wrapper.active .drag-drop-area * {
+  pointer-events: none;
+}
+.drag-drop-wrapper.dropped-anim {
+  transform: rotateX(20deg);
+}
+.drag-drop-wrapper.dropped .drag-drop-progress {
+  top: calc(100% - 40px);
+}
+.drag-drop-wrapper .drag-drop {
+  position: relative;
+  width: 100%;
+  max-width: 568px;
+  border-radius: 40px;
+  background: #fff;
+  box-shadow: 0px 53px 86px rgba(0, 76, 116, 0.1);
+  display: grid;
+  place-items: center;
+  padding: 42px;
+  z-index: 10;
+}
+.output-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 568px;
+  border-radius: 40px;
+  background: #fff;
+  box-shadow: 0px 53px 86px rgba(0, 76, 116, 0.1);
+  padding: 20px;
+  z-index: 10;
+}
+.output-wrapper h1 {
+  font-weight: 600;
+  color: #162ef7;
+}
+.output-wrapper p {
+  font-weight: 400;
+  color: #1c3664;
+}
+.drag-drop-wrapper .drag-drop-area {
+  border-radius: 24px;
+  background: #f4f8fb;
+  border: 2px dashed #c5d1e2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
+.drag-drop-wrapper .drag-drop-area-text {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 2rem;
+  text-align: center;
+  color: var(--drag-area-text-color);
+}
+.drag-drop-wrapper .drag-drop-area-separator {
+  margin-top: 4px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--drag-area-separator-color);
+  position: relative;
+}
+.drag-drop-wrapper .drag-drop-area-separator::before {
+  content: "";
+  height: 2px;
+  width: 80px;
+  position: absolute;
+  top: 50%;
+  left: -90px;
+  background-color: var(--drag-area-separator-color);
+}
+.drag-drop-wrapper .drag-drop-area-separator::after {
+  content: "";
+  height: 2px;
+  width: 80px;
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 10px);
+  background-color: var(--drag-area-separator-color);
+}
+.drag-drop-wrapper .drag-drop-area-button {
+  margin-top: 18px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 16px 40px;
+  background-color: var(--drag-area-primary-color);
+  color: #fff;
+  border-radius: 12px;
+  transition: background-color 0.3s;
+}
+.drag-drop-wrapper .drag-drop-area-button:hover {
+  background-color: var(--drag-area-primary-hover);
+}
+.drag-drop-wrapper .drag-drop-progress {
+  position: relative;
+  width: 80%;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  border-radius: 24px;
+  box-shadow: 0px 53px 86px rgba(0, 76, 116, 0.1);
+  padding: 70px 24px 30px 24px;
+  z-index: 9;
+  transition: top 0.6s;
+}
+.drag-drop-wrapper .drag-drop-progress-loader {
+  width: 100%;
+  height: 22px;
+  background-color: var(--drag-area-loader-bg);
+  border-radius: 11px;
+  overflow: hidden;
+  padding: 3px;
+}
+.drag-drop-wrapper .drag-drop-progress-loader-thumb {
+  width: 0;
+  height: 100%;
+  background-color: var(--drag-area-primary-color);
+  border-radius: 11px;
+}
